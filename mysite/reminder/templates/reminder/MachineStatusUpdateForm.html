@@ -1,0 +1,20 @@
+<div class="form-popup" id="form-popup-update-status">
+    <div class="form-update-status-container">
+        <h2>Update Machine DCR #302 OX-J Status</h2>
+        <h6>ID</h6>
+        <br>
+        <strong>Status: </strong>
+        <select id="" style="padding: 10px; background:#f1f1f1; border:none;">
+            <option value="0">NG</option>
+            <option value="1">OK</option>
+            <option value="2">SETTING</option>
+        </select>
+        <p><strong>Config: </strong><input id="fUpdateConfig" type="text" placeholder="Enter Config" ></p>
+        <p><strong>Current LOT ID: </strong><input id="fUpdateLOT" type="text" placeholder="Enter LOT ID" ></p>
+        <p><strong>SW: </strong><input id="fUpdateSW" type="text" placeholder="Enter SW" ></p>
+        <p><strong>Details: </strong><textarea id="fUpdateDetails" rows="3"></textarea></p>
+        <br>
+        <button class="btn btnSave" onclick="updateMachineStatusData()">Save</button>
+        <button class="btn btnCancel" onclick="closeFormUpdateStatus()">Close</button>
+    </div>
+</div>

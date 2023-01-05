@@ -1,0 +1,66 @@
+/* Style for the top menu */
+.top-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #444;
+    color: #fff;
+    height: 50px;
+}
+
+.top-menu a,
+b,
+button {
+    padding: 16.5px 20px 16.5px 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.top-menu select,option{
+    font-weight: bold;
+    padding: 15px 20px 15px 20px;
+    background-color: #444;
+    border: none;
+    color: white;
+}
+
+
+.top-menu select:focus {
+    outline: none;
+}
+
+
+.top-menu a:hover {
+    background-color: #aaa;
+}
+
+.top-menu select:hover {
+    background-color: #aaa;
+}
+
+.top-menu option:hover {
+    background-color: #aaa;
+}
+
+#add-machine {
+    width: 200px;
+}
+
+#add-machine option[value=""][disabled] {
+    display: none;
+}
+
+#add-machine option[value=""]:not([disabled]):not([selected]) {
+    color: #999;
+}
+
+
+.stick-right {
+    float: right;
+}
+
+.stick-left {
+    float: left;
+}

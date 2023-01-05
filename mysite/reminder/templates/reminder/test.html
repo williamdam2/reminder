@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <head>
+    <style>
+      .top-menu {
+        float: right;
+      }
+
+      .top-menu .root-item {
+        display: inline-block;
+        cursor: pointer;
+      }
+
+      .top-menu .dropdown .sub-menu {
+        display: none;
+        position: absolute;
+      }
+
+      .top-menu .dropdown:hover .sub-menu {
+        display: block;
+      }
+
+      .top-menu .sub-menu .sub-root-item {
+        display: block;
+      }
+    </style>
+  </head>
+  <div class="top-menu">
+    <ul>
+      <li class="root-item">Root 1</li>
+      <li class="root-item dropdown">
+        Root 2
+        <ul class="sub-menu">
+          <li class="sub-root-item">Sub Root 1</li>
+          <li class="sub-root-item">Sub Root 2</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</body>
+<script>
+  // If you want to toggle the dropdown menu on click instead of hover:
+
+  const rootItems = document.querySelectorAll('.root-item');
+
+  rootItems.forEach((rootItem) => {
+    rootItem.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const dropdown = rootItem.querySelector('.dropdown');
+      if (dropdown) {
+        dropdown.classList.toggle('active');
+      }
+    });
+  });
+
+  // Close the dropdown menu when clicking outside of it
+
+  document.addEventListener('click', (event) => {
+    const dropdowns = document.querySelectorAll('.dropdown.active');
+    dropdowns.forEach((dropdown) => {
+      dropdown.classList.remove('active');
+    });
+  });
+</script>
+
+</html>

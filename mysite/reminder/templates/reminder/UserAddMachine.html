@@ -1,0 +1,241 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- form filter machine type  -->
+<link rel="stylesheet" href="{% static 'reminder\css\userAddMachine.css' %}">
+
+<p class="container_multifilter">
+<div class="multifilter">
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" id="have_filter" style="display: none;" value="on" name="have_filter">
+        <div class="selectBox" onclick="showCheckboxes()">
+            <select>
+                <option>--All--</option>
+            </select>
+            <div class="overSelect"></div>
+        </div>
+        <div id="checkboxes">
+            {% for items in all_mac_type_list %}
+            <label for="{{items.macType}}">
+                <input type="checkbox" value="filter" name="{{items.macType}}" />{{items.macType}}</label>
+            {% endfor %}
+        </div>
+        <input type="submit" value="FILTER">
+    </form>
+</div>
+</p>
+
+
+<script>
+    var expanded = false;
+
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+</script>
+
+<!-- end of form filter machine type -->
+{% if current_filter %}
+<p style="background-color: rgb(219, 249, 161); color: green;">Current filter: <b>{{current_filter}}</b></p>
+{% endif %}
+
+<div class="mac_select_container">
+    <div class="fContainer">
+        <legend>Machine don't have:</legend>
+        <select class="mac_select mac_select_dhave" id="select_macDontHave" multiple>
+            {% for mac in mac_dont_have %}
+            <option value="{{mac.macId}}">{{mac.macId}}---{{mac.line}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="fContainer">
+        <button onclick="addDontHaveMac()"> >> </button>
+        <button onclick="removeWillAdd()"> << </button>
+    </div>
+    <div class="fContainer">
+        <select class="mac_select mac_select_dhave"  id="select_macWillAdd" multiple>
+
+        </select>
+    </div>
+    <div class="fContainer">
+        <button onclick="userAddMachineSave()">Add</button>
+    </div>
+    <br>
+    <br>
+    <div class="fContainer">
+        <legend>Machine don't have:</legend>
+        <select class="mac_select mac_select_have"  id="select_macHave" multiple>
+            {% for mac in mac_have %}
+            <option value="{{mac.macId}}">{{mac.macId}}---{{mac.line}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="fContainer">
+        <button onclick="addWillDeleteMac()"> >> </button>
+        <button onclick="removeWillDeleteMac()"> << </button>
+    </div>
+    <div class="fContainer">
+            <select class="mac_select mac_select_have" id="select_macHaveWillDelete" multiple>
+            </select>
+    </div>
+    <div class="fContainer">
+        <button onclick="userRemoveMacSave()"> Remove </button>
+    </div>
+</div>
+
+<script>
+    // test
+    var test = "APS#123"
+    var en = escape(test)
+    console.log(en)
+
+    var select_macWillAdd = document.getElementById("select_macWillAdd");
+    var select_macDontHave = document.getElementById("select_macDontHave");
+    var select_macHave = document.getElementById("select_macHave");
+    var select_macHaveWillDelete = document.getElementById("select_macHaveWillDelete");
+    var listMacWillAdd = [];
+    var listMacWillDelete = [];
+
+    function addDontHaveMac() {
+        let selectedMac = []
+        for (let mac of select_macDontHave.options) {
+            if (mac.selected) {
+                let info = { "macId": mac.value, "display": mac.innerHTML };
+                selectedMac.push(info)
+            }
+        }
+        listMacWillAdd.push.apply(listMacWillAdd, selectedMac);
+        listMacWillAdd = listMacWillAdd.filter((value, index, self) =>
+            index === self.findIndex((t) => (
+                t.macId === value.macId
+            ))
+        )
+        clearSelectOptions(select_macWillAdd);
+        for (let i = 0; i < listMacWillAdd.length; i++) {
+            let theOption = document.createElement('option');
+            theOption.innerHTML = listMacWillAdd[i].display;
+            theOption.value = listMacWillAdd[i].macId;
+            select_macWillAdd.add(theOption);
+        }
+    }
+
+    function addWillDeleteMac(){
+        let selectedMac = []
+        for (let mac of select_macHave.options) {
+            if (mac.selected) {
+                let info = { "macId": mac.value, "display": mac.innerHTML };
+                selectedMac.push(info)
+            }
+        }
+        listMacWillDelete.push.apply(listMacWillDelete, selectedMac);
+        listMacWillDelete = listMacWillDelete.filter((value, index, self) =>
+            index === self.findIndex((t) => (
+                t.macId === value.macId
+            ))
+        )
+        clearSelectOptions(select_macHaveWillDelete);
+        for (let i = 0; i < listMacWillDelete.length; i++) {
+            let theOption = document.createElement('option');
+            theOption.innerHTML = listMacWillDelete[i].display;
+            theOption.value = listMacWillDelete[i].macId;
+            select_macHaveWillDelete.add(theOption);
+        }
+    }
+
+    function removeWillAdd() {
+        let toRemoveList = []
+        for (let i = select_macWillAdd.options.length - 1; i >= 0; i--) {
+            if (select_macWillAdd[i].selected) {
+                let info = { "macId": select_macWillAdd[i].value, "display": select_macWillAdd[i].innerHTML };
+                toRemoveList.push(info)
+            }
+        }
+        listMacWillAdd = listMacWillAdd.filter((value) => (toRemoveList.map(e => e.macId).indexOf(value.macId) < 0));
+        clearSelectOptions(select_macWillAdd);
+        for (let i = 0; i < listMacWillAdd.length; i++) {
+            let theOption = document.createElement('option');
+            theOption.innerHTML = listMacWillAdd[i].display;
+            theOption.value = listMacWillAdd[i].macId;
+            select_macWillAdd.add(theOption);
+        }
+    }
+
+    function removeWillDeleteMac()
+    {
+        let toRemoveList = []
+        for (let i = select_macHaveWillDelete.options.length - 1; i >= 0; i--) {
+            if (select_macHaveWillDelete[i].selected) {
+                let info = { "macId": select_macHaveWillDelete[i].value, "display": select_macHaveWillDelete[i].innerHTML };
+                toRemoveList.push(info)
+            }
+        }
+        listMacWillDelete = listMacWillDelete.filter((value) => (toRemoveList.map(e => e.macId).indexOf(value.macId) < 0));
+        clearSelectOptions(select_macHaveWillDelete);
+        for (let i = 0; i < listMacWillDelete.length; i++) {
+            let theOption = document.createElement('option');
+            theOption.innerHTML = listMacWillDelete[i].display;
+            theOption.value = listMacWillDelete[i].macId;
+            select_macHaveWillDelete.add(theOption);
+        }
+    }
+
+    function userAddMachineSave() {
+        let xhttp = new XMLHttpRequest();
+        let data = { "listMac": [] };
+        for (let i = 0; i < listMacWillAdd.length; i++) {
+            data.listMac.push(listMacWillAdd[i].macId)
+        }
+        let json = JSON.stringify(data);
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                if (this.responseText == "ok") {
+                    location.reload();
+                }
+            }
+        }
+        xhttp.open("POST", "/reminder/api/userAddMachineInterest", true);
+        xhttp.send(json);
+    }
+
+    function userRemoveMacSave()
+    {
+        let xhttp = new XMLHttpRequest();
+        let data = { "listMac": [] };
+        for (let i = 0; i < listMacWillDelete.length; i++) {
+            data.listMac.push(listMacWillDelete[i].macId)
+        }
+        let json = JSON.stringify(data);
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                if (this.responseText == "ok") {
+                    location.reload();
+                }
+            }
+        }
+        xhttp.open("POST", "/reminder/api/userDeleteMachineInterest", true);
+        xhttp.send(json);
+    }
+
+    function clearSelectOptions(selectObj) {
+        let length = selectObj.options.length;
+        for (let i = length - 1; i >= 0; i--) {
+            selectObj.options[i] = null;
+        }
+    }
+</script>
+
+
+{% endblock content %}

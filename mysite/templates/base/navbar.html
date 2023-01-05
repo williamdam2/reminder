@@ -1,0 +1,15 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'base/css/navbar.css'%}">
+
+<div class="topnav">
+    {% if request.user.is_authenticated%}
+    <a> User: {{user.get_username}} </a>
+    <a class "aright" href="{% url 'logout_form' %}">Logout</a>
+    {% else %}
+    <a class "aright" href="{% url 'login_form' %}">Login</a>
+    {% endif %}
+    <a class="aleft" href="/">About</a>
+    <a class="aleft" href="/">Contact</a>
+    <a class="aleft" href="/reminder">REMINDER</a>
+    <a class="active al" href="/">Home</a>
+</div>

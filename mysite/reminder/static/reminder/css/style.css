@@ -1,0 +1,122 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #dfe4e4;
+  padding: 20px 0 28px 0;
+  margin: 0;
+}
+  .grid {
+    border-width: 10px;
+    margin-left: 2%;
+    margin-right: 2%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 2fr));
+    grid-gap: 5px;
+    padding: 10px;
+  }
+  
+  
+  .grid>.grid-eye {
+    color: black;
+    height: 250px;
+    font-size: 20px;
+    overflow: hidden;
+    position: relative;
+    margin: 0 0 1rem 0;
+    border-radius: 1em;
+  }
+  
+  .mStatusTextInG {
+    margin-block: 5em;
+    text-align: center;
+    color: rgb(142, 131, 131);
+    font-size: 35px;
+    margin-block: 0em;
+  }
+  
+  .mInfoTextInG {
+    font-size: 15px;
+    margin-block: 0em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    color: rgb(8, 78, 105);
+  }
+  
+  .mDetailInG {
+    position: absolute; 
+    bottom: 2%;
+    left: 0;
+    right: 0em;
+    top: 70%;
+    margin: 0.5em;
+  }
+
+  .mPkIdText
+  {
+    position:absolute;
+    font-size:5px;
+    margin: 0.5em;
+    top: 5%;
+  }
+/* *************** */
+  /* style for update status form */
+.form-popup {
+    display: none;
+    position: fixed;
+    width: 1000px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    /* Negative half of height. */
+    margin-left: -500px;
+    /* Negative half of width. */
+
+}
+
+.form-update-status-container {
+    max-width: auto;
+    padding: 10px;
+    background-color: rgb(154, 209, 200);
+    border: 1px solid rgb(76, 109, 104);
+    border-radius: 5px;
+}
+
+/* Full-width input fields */
+.form-update-status-container input[type=text],
+.form-update-status-container textarea,
+.form-update-status-container select {
+    width: 50%;
+    padding: 15px;
+    border: none;
+    /* background: #f1f1f1; */
+    background: #f1f1f1;
+}
+
+/* Set a style for the submit/login button */
+.form-update-status-container .btnSave {
+    background-color: #1e9e2f;
+}
+
+/* Add a red background color to the cancel button */
+.form-update-status-container .btnCancel {
+    background-color: rgb(243, 68, 45);
+}
+
+.form-update-status-container>.btn {
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 16px 20px;
+    width: 40%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+/* Add some hover effects to buttons */
+.form-update-status-container>.btn:hover {
+    opacity: 1.1;
+}
+
+.form-update-status-container>.btn:active {
+    transform: translateY(4px);
+}

@@ -1,0 +1,28 @@
+{% load static %}
+
+<head>
+  <link rel="stylesheet" href="{% static 'reminder/css/reminderMenu.css'%}">
+</head>
+<div class="top-menu">
+  <div class="stick-left">
+    <select onchange="addMachineChange(event)" id="add-machine">
+      <option selected disabled hidden>Add machine</option>
+      <option value="{% url 'userAddMachine' %}">For you</option>
+      <option value="{% url 'createMachine' %}">For system</option>
+    </select>
+    <a href="{% url 'logSystem' %}">LOG</a>
+  </div>
+  <div class="stick-right">
+    <b id="clock"></b>
+    <b><strong>NG:</strong><span id="numberOfNG">0</span></b>
+    <b><strong>NUMBER OF MACHINE: </strong><span id="numberOfMachines">0</span></b>
+  </div>
+  <b style="text-align:center; left: 40%; position: absolute; font-size: xx-large;">REMINDER </b>
+</div>
+<script>
+  var addMachine = document.getElementById("add-machine");
+  function addMachineChange(event)
+  {
+    window.location.replace(addMachine.value);
+  }
+</script>

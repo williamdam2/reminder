@@ -1,0 +1,18 @@
+<head>
+    <link rel="stylesheet" href="{% static 'reminder/css/reminderMenu.css'%}">
+  </head>
+  <div class="top-menu">
+    <div class="dropdown">
+      <button>Add machine</button>
+      <div class="dropdown-menu">
+        
+      </div>
+      <a href="{% url 'logSystem' %}">LOG</a>
+    </div>
+    <div class="inline">
+      <b id="clock"></b>
+      <b style="float: right;"><strong>NG:</strong><span id="numberOfNG">0</span></b>
+      <b style="float: right;"><strong>NUMBER OF MACHINE: </strong><span id="numberOfMachines">0</span></b>
+    </div>
+    <b style="text-align:center; left: 40%; position: absolute; font-size: xx-large;"> REMINDER </b>
+  </div>  

@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'authentication/css/style.css'%}">
+</head>
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <div class="login">
+                <form method="post">
+                    {% if loginfail%}
+                    <p style="background-color: pink; color: darkred">{{loginfail}}</p>
+                    {% endif %}
+                    {% csrf_token %}
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        <input type="text" class="login__input" placeholder="User name" name="user" autofocus>
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fas fa-lock"></i>
+                        <input type="password" class="login__input" placeholder="Password" name="pass">
+                    </div>
+                    <input type="submit" class="button login__submit" value="Sign-in" >
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </input>
+                </form>
+                <button class="button login__submit" onclick="location.href='{% url 'register_form' %}'">
+                    <span>Sign-up</span>
+                </button>
+            </div>
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>		
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>		
+    </div>
+</div>
+{% endblock content %}

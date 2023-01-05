@@ -1,0 +1,13 @@
+<div ondblclick="openFormUpdateStatus(this.id)" id="{{machine.macId}}" class="grid-eye" style="background-color: gray ;">
+    <p class="mStatusTextInG">N/A</p>
+    <p class="mInfoTextInG" style="float:left;"><strong>TYPE: </strong><span>{{machine.macType_id}}</span></p>
+    <p class="mInfoTextInG" style="float:left;"><strong>LINE: </strong><span>{{machine.line}}</span></p>
+    <br>
+    <br>
+    <p class="mInfoTextInG"><strong>Model:</strong><span>{{machine.model}}</span></p>
+    <p class="mInfoTextInG"><strong>Config:</strong><span>{{machine.buildConfig}}</span></p>
+    <p class="mInfoTextInG"><strong>LOT_ID:</strong><span>{{machine.lotId}}</span></p>
+    <p class="mInfoTextInG"><strong>SW:</strong><span>{{machine.sw}}</span></p>
+    <textarea class="mDetailInG" placeholder="Detail">{{machine.curDetail}}</textarea>
+    <i class="mPkIdText">{{machine.macId}}</i>
+</div>

@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'authentication/css/style.css'%}">
+</head>
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <div class="login">
+                <p style="background-color: yellow;">You are logged out now</p>
+                <button class="button login__submit" onclick="location.href='{% url 'login_form' %}'">
+                    <span>Sign-in</span>
+                </button>
+                <button class="button login__submit" onclick="location.href='{% url 'register_form' %}'">
+                    <span>Sign-up</span>
+                </button>
+                <br>
+                <p id="rdir"></p>
+            </div>
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
+    </div>
+</div>
+<script>
+    const queryString = window.location.search;
+    const urlPara = new URLSearchParams(queryString);
+    const next = urlPara.get('next');
+    var delay = parseInt(urlPara.get('delay'));
+    const test = urlPara.get('test');
+    if (next != null && delay != null) {
+        rdir = document.getElementById("rdir");
+        rdir.innerHTML = "You will be redirected to register site in " + String(delay / 1000) + " seconds";
+        rdir.style.backgroundColor = "greenyellow";
+
+        if (Number.isInteger(delay)) {
+            var static_delay =delay;
+            setInterval(() => {
+                delay=delay-1000;
+                rdir.innerHTML = "You will be redirected to register site in " + String(delay / 1000) + " seconds";
+            }, 1000);
+
+            const timeout_redirect = setTimeout(() => {
+                location.replace(next);
+            }, static_delay);
+        }
+    }
+</script>
+{% endblock content %}

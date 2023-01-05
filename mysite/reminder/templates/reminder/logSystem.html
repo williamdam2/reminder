@@ -1,0 +1,67 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'reminder\css\userAddMachine.css' %}">
+
+<div class="mac_select_container">
+    <div class="fContainer">
+        <legend>Select machine need to download log file:</legend>
+        <select class="mac_select " id="select_macHave" multiple>
+            {% for mac in mac_have %}
+            <option value="{{mac}}">{{mac}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="fContainer">
+        <select id="select_year">
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
+        </select>
+    </div>
+    <div class="fContainer">
+        <button onclick="downloadLog()">
+            Download
+        </button>
+    </div>
+</div>
+<script>
+    const now = new Date();
+    const year = now.getFullYear();
+    console.log(year);
+    var select_macHave =document.getElementById("select_macHave");
+    var select_year = document.getElementById("select_year");
+    for(let i = 0 ; i < select_year.options.length ; i++)
+    {   
+        if(select_year.options[i].value == String(year))
+        {
+            console.log("year is: "+select_year.options[i].value);
+            select_year.options[i].selected = true;
+        }
+    }
+    
+    function downloadLog()
+    {
+        for(let i = 0 ; i < select_macHave.options.length ; i++)
+        {
+            if(select_macHave[i].selected)
+            {
+                let fileName = select_macHave.options[i].value;
+                let para = fileName+"_"+select_year.value+".csv";
+                para = escape(para);
+                let url = "{% url 'downloadMachineLog' %}";
+                let fullUrl = url+"?fileName="+para;
+                console.log(fullUrl);
+                window.open(fullUrl,'_blank').focus();
+                break;
+            }
+        }
+    }
+</script>
+{% endblock content %}

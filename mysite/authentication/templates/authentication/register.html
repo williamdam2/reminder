@@ -1,0 +1,97 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'authentication/css/style.css'%}">
+</head>
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <div class="login">
+                <p><b>Enter your Gportal staff name (mail name)</b></p>
+                <br>
+                {% if register_fail %}
+                <p style="background-color: pink; color: darkred">{{register_fail}}</p>
+                {% endif %}
+
+                {% if register_ok %}
+                <p style="background-color: greenyellow; color: green">{{register_ok}}</p>
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="login__field">
+                        <label for="input_user">User name: </label>
+                        <input id="input_user" type="text" class="login__input" placeholder="User name" name="user" value="{{user}}"  readonly>  
+                    </div>
+                    <div class="login__field">
+                        <label for="input_pass">Password: </label>
+                        <input id="input_pass" type="password" class="login__input" placeholder="Password" name="pass" autofocus>
+                    </div>
+                    <div class="login__field">
+                        <label for="input_re_pass">Re-type: </label>
+                        <input id="input_re_pass" type="password" class="login__input" placeholder="Re-type Password" name="re_pass">
+                    </div>
+                    <input id="showPassCheckBox" type="checkbox" onchange="showpassfunc()">Show password</input>
+                    <br>
+                    <input id="useSameCheckBox" type="checkbox" onchange="useSamefunc()">Use password same with Gportal</input>
+                    <input type="text" style="display: none;" name="verification" value="2"> 
+                    <input type="text" style="display: none;" name="gpass" value="{{gpass}}"> 
+                    <br>
+                    <br>
+                    <div class="login__field">
+                        <label for="input_user">Name: </label>
+                        <input type="text" class="login__input" name="displayName" value="{{displayName}}" readonly>  
+                    </div>
+                    <div class="login__field">
+                        <label for="input_user">Email: </label>
+                        <input type="text" class="login__input" name="email" value="{{email}}" readonly>  
+                    </div>
+                    <div class="login__field">
+                        <label for="input_user">Department: </label>
+                        <input type="text" class="login__input" name="department" value="{{department}}" readonly>  
+                    </div>  
+                    <input type="submit" class="button login__submit" value="Submit" >
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </input>
+                </form>
+                
+            </div>
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>		
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>		
+    </div>
+</div>
+<script>
+    var gPass = "{{gpass}}";
+    var user = "{{user}}"
+    var showPassCheckBox = document.getElementById("showPassCheckBox")
+    var useSameCheckBox = document.getElementById("useSameCheckBox")
+    var input_password = document.getElementById("input_pass")
+    var input_re_password = document.getElementById("input_re_pass")
+    function showpassfunc()
+    {
+        if(showPassCheckBox.checked)
+        {
+            input_password.type = "text";
+            input_re_password.type = "text";
+        }
+        else
+        {
+            input_password.type = "password";
+            input_re_password.type = "password";
+        }
+    }
+    function useSamefunc()
+    {
+        if(useSameCheckBox.checked)
+        {
+            input_password.value = gPass;
+            input_re_password.value = gPass;
+        }
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'reminder/css/style.css'%}">
+</head>
+
+{% include 'reminder/reminderMenu.html'%}
+
+<div id="gridView">
+    {% for mac_with_type in machines %}
+    <fieldset class="grid">
+        <legend>
+            <h1>{{mac_with_type.type}}</h1>
+        </legend>
+
+        {% for machine in mac_with_type.mac%}
+        {% include 'reminder/MachineGrid.html' with object=machine %}
+        {% endfor %}
+    </fieldset>
+    {% endfor %}
+</div>
+
+
+{% include 'reminder/MachineStatusUpdateForm.html' with object=machine %}
+
+<script src="{% static 'reminder/js/scripts.js'%} "></script>
+<script>
+    function logout_js() {
+        const logout_http = new XMLHttpRequest();
+        const logout_url = '{% url 'logout_form' %}';
+        logout_http.open("GET", logout_url);
+        logout_http.send();
+        /*logout_http.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(logout_http.responseText);
+            }
+        }*/
+    }
+    window.addEventListener('beforeunload', function (e) {
+        {% comment %} logout_js(); {% endcomment %}
+    });
+</script>
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine status monitor</title>
+<link rel="stylesheet" href="{% static 'monitor/css/style.css'%}">
+</head>
+<body>
+
+<div class="topmenu">
+    <a href="/">NPI TEST PART</a>
+    <b id="clock"></b>
+    <b style="text-align:center; left: 40%; position: absolute; font-size: xx-large;"> REMINDER </b>
+    <b style="float: right;" ><strong>NG: </strong><span id="numberOfNG">0</span></b>
+    <b style="float: right;" ><strong>NUMBER OF MACHINE: </strong><span id="numberOfMachines">0</span></b>
+</div>
+<div id = "gridView">
+    {% for mac_with_type in machines %}
+<fieldset class = "grid">
+    <legend><h1>{{mac_with_type.type}}</h1></legend> 
+
+        {% for machine in mac_with_type.mac%}
+        {% include 'monitor/MachineGrid.html' with object=machine %}
+        {% endfor %}
+</fieldset>
+{% endfor %}
+</div>
+
+
+{% include 'monitor/MachineStatusUpdateForm.html' with object=machine %}
+</body>
+<script src="{% static 'monitor/js/scripts.js'%} ">
+
+</script>
+</html>
